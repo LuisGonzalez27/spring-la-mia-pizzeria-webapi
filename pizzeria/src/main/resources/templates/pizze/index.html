@@ -5,33 +5,32 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <th:block th:replace="~{fragments/fragment :: resources}"></th:block>
+
+
+
+    <title>Pizze</title>
 </head>
 <body>
-    <h1>Pizze</h1>
+<div class="container px-4">
+    <h1 class="text-center py-5">Le nostre pizze</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Descrizione</th>
-                <th>Prezzo</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="pizza : ${list}" th:object="${pizza}">
-                <td th:text="*{nome}"></td>
-                <td th:text="*{descrizione}"></td>
-                <td th:text="*{prezzo}"></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row gx-5">
+        <div class="col" th:each="pizza : ${list}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">[[${pizza.nome}]]</h5>
+                        <p class="card-text">[[${pizza.descrizione}]]</p>
+                        <a href="#" class="btn btn-primary">Prezzo: [[${pizza.prezzo}]] €</a>
+                    </div>
+                </div>
+        </div>
 
-    <div th:each="pizza : ${list}">
-        <h2>[[${pizza.nome}]]</h2>
-        <p>[[${pizza.descrizione}]]</p>
-        <p>Prezzo: [[${pizza.prezzo}]] €</p>
+        <h2 th:if="${list.size() == 0}">Non ci sono pizze presenti!</h2>
+
     </div>
+</div>
+
 
 </body>
 </html>
