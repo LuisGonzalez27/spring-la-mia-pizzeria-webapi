@@ -1,11 +1,14 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="~{fragments/fragment :: resources}"></th:block>
+    <th:block th:replace="/fragments/fragment :: resources"></th:block>
     <title>Pizze</title>
 </head>
 
 <body>
+
+<th:block th:replace="/fragments/navbar :: navbar('books')"></th:block>
+
 <div class="container px-4">
     <h1 class="text-center py-5">Le nostre pizze</h1>
 
