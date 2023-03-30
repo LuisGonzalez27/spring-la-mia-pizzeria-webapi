@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="/fragments/fragment :: resources"></th:block>
+    <th:block th:replace="~{/fragments/fragment :: resources}"></th:block>
     <title>Pizze</title>
 </head>
 
 <body>
 
-<th:block th:replace="/fragments/navbar :: navbar('books')"></th:block>
+<th:block th:replace="~{/fragments/navbar :: navbar('pizze')}"></th:block>
 
 <div class="container px-4">
     <h1 class="text-center py-5">Le nostre pizze</h1>
@@ -18,7 +18,8 @@
                     <div class="card-body">
                         <h5 class="card-title">[[${pizza.nome}]]</h5>
                         <p class="card-text">[[${pizza.descrizione}]]</p>
-                        <a href="#" class="btn btn-primary">Prezzo: [[${pizza.prezzo}]] €</a>
+                        <p class="card-text">Prezzo: [[${pizza.prezzo}]] €</p>
+                        <a th:href="@{'pizze/'+${pizza.id}}" class="btn btn-primary">Dettagli</a>
                     </div>
                 </div>
         </div>
