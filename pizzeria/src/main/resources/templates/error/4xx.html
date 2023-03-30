@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/fragment :: resources}"></th:block>
+    <title>Error [[${status}]]</title>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="text-center mt-5">OPS Client Error <i class="fa-solid fa-circle-exclamation fa-beat" style="color: #ff0000;"></i></h1>
+        <p>
+            <a th:href="@{/}">Go back to home page</a>
+        </p>
+    </div>
+
+    <div th:if="${exception}">
+        <!-- ONLY IN DEV MODE -->
+        <p th:text="${exception}"></p>
+        <p th:text="${trace}"></p>
+    </div>
+
+</body>
+
+</html>
