@@ -1,6 +1,7 @@
 package org.learning.pizzeria.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -11,11 +12,30 @@ public class Pizza {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @NotEmpty
+    @NotNull
+    @Size(min=3, max=200)
     private String nome;
+
+    @NotEmpty
+    @NotNull
+    @Size(min=3, max=250)
     private String descrizione;
 
+    @NotNull
+    @DecimalMin("1.00")
+    @DecimalMax("50.00")
     private BigDecimal prezzo;
+
+    public Pizza() {
+        super();
+    }
+
+    public Pizza(String nome, String descrizione, BigDecimal prezzo) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.prezzo = prezzo;
+    }
 
     public Integer getId() {
         return id;

@@ -11,28 +11,46 @@
 
 <div class="container px-4">
     <h1>Nuova pizza</h1>
+
     <form id="pizza-form" method="post" th:object="${pizza}" th:action="@{/pizze/create}" class="row">
         <!-- Nome -->
         <div class="col-7">
             <label class="form-label" for="nome">Nome*</label>
-            <input type="text" id="nome" class="form-control" th:field="*{nome}">
+            <input type="text" id="nome" class="form-control" th:field="*{nome}"
+                   th:errorClass="is-invalid">
+            <div th:if="${#fields.hasErrors('nome')}" class="invalid-feedback">
+                <ul>
+                    <li th:each="err : ${#fields.errors('nome')}" th:text="${err}"></li>
+                </ul>
+            </div>
         </div>
         <!-- Descrizione -->
         <div class="col-7">
             <label class="form-label" for="descrizione">Descrizione*</label>
-            <textarea id="descrizione" class="form-control" th:field="*{descrizione}" rows="5"></textarea>
+            <textarea id="descrizione" class="form-control" th:field="*{descrizione}"
+                      rows="5" th:errorClass="is-invalid"></textarea>
+            <div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
+                <ul>
+                    <li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
+                </ul>
+            </div>
         </div>
         <!-- Prezzo -->
         <div class="col-7">
             <label class="form-label" for="prezzo">Prezzo*</label>
-            <input type="number" id="prezzo" class="form-control" th:field="*{prezzo}">
+            <input type="number" id="prezzo" class="form-control" th:field="*{prezzo}"
+                   th:errorClass="is-invalid">
+            <div th:if="${#fields.hasErrors('prezzo')}" class="invalid-feedback">
+                <ul>
+                    <li th:each="err : ${#fields.errors('prezzo')}" th:text="${err}"></li>
+                </ul>
+            </div>
         </div>
 
         <div class="col-12 pt-3">
             <button type="submit" class="btn btn-success">Salva</button>
             <a class="btn btn-primary" th:href="@{/pizze}">Indietro</a>
         </div>
-
     </form>
 </div>
 
