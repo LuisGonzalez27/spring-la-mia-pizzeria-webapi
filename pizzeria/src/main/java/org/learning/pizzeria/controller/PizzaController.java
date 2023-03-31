@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -37,5 +38,15 @@ public class PizzaController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/search")
+    public String search(Model model, @RequestParam(name = "q") String keyword){
+
+        System.out.println(pizzaRepository.findByNome(keyword));
+
+        List<Pizza> filteredPizze = pizzaRepository.findByNomeContainingIgnoreCase(keyword);
+        model.addAttribute("list", filteredPizze);
+        return "/pizze/index";
     }
 }
