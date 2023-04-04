@@ -89,10 +89,16 @@ public class PizzaController {
     }
 
     @PostMapping("/edit/{id}")
-    public String doEdit(@PathVariable Integer id){
-        System.out.println(id);
-        return "redirect:/pizze";
+    public String doEdit(@PathVariable Integer id,@ModelAttribute("pizza") Pizza formPizza){
+
+        try {
+            Pizza updatePizza = pizzaService.updatePizza(formPizza, id);
+            return "redirect:/pizze/" + Integer.toString(updatePizza.getId());
+        } catch (PizzaNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza con id " + id + " non trovata");
+        }
     }
+
 }
 
 

@@ -39,4 +39,13 @@ public class PizzaService {
             throw new PizzaNotFoundException(Integer.toString(id));
         }
     }
+
+    public  Pizza updatePizza(Pizza formPizza, Integer id) throws PizzaNotFoundException {
+        Pizza pizzaToUpdate= getById(id);
+        pizzaToUpdate.setNome(formPizza.getNome());
+        pizzaToUpdate.setDescrizione(formPizza.getDescrizione());
+        pizzaToUpdate.setPrezzo(formPizza.getPrezzo());
+        return  pizzaRepository.save(pizzaToUpdate);
+    }
+
 }

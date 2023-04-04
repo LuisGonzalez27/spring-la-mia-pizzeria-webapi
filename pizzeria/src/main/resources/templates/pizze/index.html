@@ -20,7 +20,13 @@
                         <h5 class="card-title">[[${pizza.nome}]]</h5>
                         <p class="card-text">[[${pizza.descrizione}]]</p>
                         <p class="card-text">Prezzo: [[${pizza.prezzo}]] €</p>
-                        <a th:href="@{'pizze/'+${pizza.id}}" class="btn btn-primary">Dettagli</a>
+                        <a th:href="@{'pizze/'+${pizza.id}}" class="btn btn-primary" title="Dettagli">
+                            <i class="fa-solid fa-pizza-slice"></i>
+                        </a>
+                        <a th:href="@{'pizze/edit/{id}'(id=${pizza.id})}" class="btn btn-primary" title="Modifica">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+
                     </div>
                 </div>
         </div>
