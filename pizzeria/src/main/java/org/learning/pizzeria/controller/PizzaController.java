@@ -89,7 +89,11 @@ public class PizzaController {
     }
 
     @PostMapping("/edit/{id}")
-    public String doEdit(@PathVariable Integer id,@ModelAttribute("pizza") Pizza formPizza){
+    public String doEdit(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult){
+        //VALIDATION
+        if (bindingResult.hasErrors()){
+            return "/pizze/edit";
+        }
 
         try {
             Pizza updatePizza = pizzaService.updatePizza(formPizza, id);
