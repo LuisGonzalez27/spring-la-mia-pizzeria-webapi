@@ -76,4 +76,23 @@ public class PizzaController {
         model.addAttribute("list", filteredPizze);
         return "/pizze/index";
     }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model){
+        try {
+            Pizza pizza = pizzaService.getById(id);
+            model.addAttribute("pizza", pizza);
+            return "/pizze/edit";
+        } catch (PizzaNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza con id " + id + " non trovata");
+        }
+    }
+
+    @PostMapping("/edit/{id}")
+    public String doEdit(@PathVariable Integer id){
+        System.out.println(id);
+        return "redirect:/pizze";
+    }
 }
+
+
