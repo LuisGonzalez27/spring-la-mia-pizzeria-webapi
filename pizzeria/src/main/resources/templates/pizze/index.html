@@ -17,7 +17,7 @@
         <div class="col" th:each="pizza : ${list}">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">[[${pizza.nome}]]</h5>
+                        <h4 class="card-title">[[${pizza.nome}]]</h4>
                         <p class="card-text">[[${pizza.descrizione}]]</p>
                         <p class="card-text">Prezzo: [[${pizza.prezzo}]] €</p>
                         <a th:href="@{'pizze/'+${pizza.id}}" class="btn btn-primary" title="Dettagli">
@@ -29,6 +29,17 @@
                         <a th:href="@{'pizze/delete/{id}'(id=${pizza.id})}" class="btn btn-danger" title="Elimina">
                             <i class="fa-solid fa-trash"></i>
                         </a>
+
+                        <div th:if="${pizza.offerteList.size()>0}" class="pt-2">
+                            <h4>Offerte:</h4>
+                            <ul th:each="offerta : ${pizza.offerteList}">
+                                <li>Dal [[${#temporals.format(offerta.startOfferDate, 'dd/MM/yyyy')}]]
+                                    fino al
+                                    [[${#temporals.format(offerta.endOfferDate, 'dd/MM/yyyy')}]]
+                                    è attiva [[${offerta.name}]].
+                                </li>
+                            </ul>
+                        </div>
 
                     </div>
                 </div>

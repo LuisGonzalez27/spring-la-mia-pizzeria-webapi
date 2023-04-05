@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "pizze")
@@ -26,6 +27,16 @@ public class Pizza {
     @DecimalMin("1.00")
     @DecimalMax("50.00")
     private BigDecimal prezzo;
+
+    @OneToMany(mappedBy = "pizza")
+    private List<Offerta> offerteList;
+
+    public List<Offerta> getOfferteList() {
+        return offerteList;
+    }
+    public void setOfferteList(List<Offerta> offerteList) {
+        this.offerteList = offerteList;
+    }
 
     public Pizza() {
         super();
