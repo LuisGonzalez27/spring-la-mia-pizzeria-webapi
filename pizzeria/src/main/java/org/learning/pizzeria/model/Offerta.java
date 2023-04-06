@@ -2,6 +2,7 @@ package org.learning.pizzeria.model;
 
 import java.time.LocalDate;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "offerte")
@@ -17,6 +18,7 @@ public class Offerta {
     private String name;
 
     @ManyToOne
+    @NotNull
     private Pizza pizza;
 
     public Pizza getPizza() {

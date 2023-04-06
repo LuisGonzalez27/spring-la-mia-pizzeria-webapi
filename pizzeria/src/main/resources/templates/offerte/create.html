@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{/fragments/fragment :: resources}"></th:block>
+    <title>Nuova offerta</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="container my-5">
+        <div class="row">
+            <div class="text-center pb-4">
+                <h2>Crea una nuova offerta</h2>
+            </div>
+            <div class="col-9 mx-auto">
+                <form id="offerta-form" method="post" class="form-label" th:action="@{/offerte/create}" th:object="${offerta}">
+                    <input type="hidden" th:field="${offerta.pizza}">
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Nome</span>
+                        <input th:field="*{name}" type="text" class="form-control" id="nomeOfferta">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" >Data inizio</span>
+                        <input class="form-control" id="startDate" th:field="*{startOfferDate}" type="date">
+
+                        <span class="input-group-text">Data fine</span>
+                        <input class="form-control" id="endDate" th:field="*{endOfferDate}" type="date">
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">
+                            <a th:href="@{|/pizze/${offerta.pizza.id}|}" class="text-decoration-none text-dark">Annulla</a>
+                        </button>
+                        <button type="submit" class="btn btn-success">Invia</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
