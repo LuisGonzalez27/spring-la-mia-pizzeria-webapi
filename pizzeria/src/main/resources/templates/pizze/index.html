@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <th:block th:replace="~{/fragments/fragment :: resources}"></th:block>
     <title>Pizze</title>
@@ -11,7 +12,12 @@
 
 <div class="container px-4">
     <h1 class="text-center py-5">Le nostre pizze</h1>
-    <a th:href="@{/pizze/create}" class="btn btn-primary mb-5">Crea nuova pizza</a>
+    <a th:href="@{/pizze/create}"
+       class="btn btn-primary mb-5"
+       sec:authorize="hasAuthority('ADMIN')"
+    >
+        Crea nuova pizza
+    </a>
 
     <div class="row gx-5">
         <div class="col" th:each="pizza : ${list}">
