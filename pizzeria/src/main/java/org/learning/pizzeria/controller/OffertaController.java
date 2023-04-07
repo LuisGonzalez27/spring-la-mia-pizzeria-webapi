@@ -1,6 +1,7 @@
 package org.learning.pizzeria.controller;
 
 import jakarta.validation.Valid;
+import org.learning.pizzeria.exceptions.OffertaNotFoundException;
 import org.learning.pizzeria.exceptions.PizzaNotFoundException;
 import org.learning.pizzeria.model.Offerta;
 import org.learning.pizzeria.model.Pizza;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -51,5 +53,30 @@ public class OffertaController {
 
         Offerta createOfferta = offertaService.create(formOfferta);
         return "redirect:/pizze/" + Integer.toString(createOfferta.getPizza().getId());
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model){
+        try {
+            Offerta offerte = offertaService.getById(id);
+            model.addAttribute("offerta", offerte);
+            return "/offerte/create";
+        } catch (PizzaNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/edit/{id}")
+    public String doEdit(@PathVariable Integer id, @Valid @ModelAttribute Offerta formOfferta,
+                         BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "/offerte/create";
+        }
+        try {
+            Offerta updatedOfferta = offertaService.update(id, formOfferta);
+            return "redirect:/pizze/" + updatedOfferta.getPizza().getId();
+        } catch (OffertaNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }

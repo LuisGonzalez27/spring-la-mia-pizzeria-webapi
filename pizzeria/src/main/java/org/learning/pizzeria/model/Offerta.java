@@ -10,7 +10,7 @@ public class Offerta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @NotNull
     private LocalDate startOfferDate;
 
     private LocalDate endOfferDate;

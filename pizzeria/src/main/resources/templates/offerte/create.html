@@ -2,18 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="~{/fragments/fragment :: resources}"></th:block>
-    <title>Nuova offerta</title>
+    <title>Offerta</title>
 </head>
 
 <body>
-<div class="container">
+<div class="container" th:with="pizza=${offerta.pizza}, edit=${offerta.id != null}">
     <div class="container my-5">
         <div class="row">
             <div class="text-center pb-4">
-                <h2>Crea una nuova offerta</h2>
+                <h2>Offerta</h2>
             </div>
             <div class="col-9 mx-auto">
-                <form id="offerta-form" method="post" class="form-label" th:action="@{/offerte/create}" th:object="${offerta}">
+                <form id="offerta-form" method="post" class="form-label"
+                      th:action="@{${edit ? '/offerte/edit/' + offerta.id : '/offerte/create'}}"
+                      th:object="${offerta}">
                     <input type="hidden" th:field="${offerta.pizza}">
 
                     <div class="input-group mb-3">
@@ -27,6 +29,10 @@
 
                         <span class="input-group-text">Data fine</span>
                         <input class="form-control" id="endDate" th:field="*{endOfferDate}" type="date">
+                    </div>
+
+                    <div class="col-6" th:if="${edit}">
+                        <h1>Ciao</h1>
                     </div>
 
                     <div class="text-end">
