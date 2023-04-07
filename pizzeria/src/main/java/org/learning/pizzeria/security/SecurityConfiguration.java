@@ -2,6 +2,7 @@ package org.learning.pizzeria.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,11 +30,25 @@ public class SecurityConfiguration {
         return provider;
     }
 
+    /*
+    * home "/" USER, ADMIN
+    * pizze "pizze" USER, ADMIN
+    * create/edit "/pizze/create" , "/pizze/edit/{id}" ADMIN
+    * dettaglio "pizze/{id)" USER, ADMIN
+    * offerte "/offerte/..." ADMIN
+     */
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-                .requestMatchers("/**")
-                .fullyAuthenticated()
+                .requestMatchers("/pizze/create", "/pizze/edit/**", "/pizze/delete/**")
+                .hasAnyAuthority("ADMIN")
+                .requestMatchers("/offerte/**")
+                .hasAnyAuthority("ADMIN")
+                .requestMatchers("/pizze", "pizze/**")
+                .hasAnyAuthority("ADMIN" , "USER")
+                .requestMatchers(HttpMethod.POST, "/pizze/**").hasAnyAuthority("ADMIN")
+                .requestMatchers("/**").permitAll()
                 .and().formLogin()
                 .and().logout()
                 .and().exceptionHandling();
