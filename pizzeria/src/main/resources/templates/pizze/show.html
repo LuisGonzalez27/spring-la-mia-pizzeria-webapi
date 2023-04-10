@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <th:block th:replace="~{/fragments/fragment :: resources}"></th:block>
     <title>Pizza dettagli</title>
@@ -18,7 +19,7 @@
         <h3>
             <span>Offerte</span>
             <a th:href="@{/offerte/create(pizzaId=${pizza.id})}" class="btn btn-primary rounded-circle"
-               title="Crea nuova offerta speciale" >
+               title="Crea nuova offerta speciale" sec:authorize="hasAuthority('ADMIN')">
                 <i class="fa-solid fa-plus"></i>
             </a>
         </h3>
@@ -30,7 +31,7 @@
                 è attiva [[${offerta.name}]].
             </li>
             <a th:href="@{'/offerte/edit/{id}'(id=${offerta.id})}" class="btn btn-primary btn-sm"
-               title="modfica offerta">
+               title="modfica offerta" sec:authorize="hasAuthority('ADMIN')">
                 <i class="fa-solid fa-pen-to-square"></i>
             </a>
         </ul>
