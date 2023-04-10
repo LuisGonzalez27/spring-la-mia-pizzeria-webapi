@@ -29,4 +29,10 @@ public class OffertaService {
         offertaTuUpdate.setEndOfferDate(formOfferta.getEndOfferDate());
         return offertaRepository.save(offertaTuUpdate);
     }
+
+    public Integer delete(Integer offertaId){
+        Offerta offertaToDelete = getById(offertaId);
+        offertaRepository.delete(offertaToDelete);
+        return offertaToDelete.getPizza().getId();
+    }
 }

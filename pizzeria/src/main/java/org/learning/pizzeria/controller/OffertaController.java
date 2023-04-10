@@ -3,6 +3,7 @@ package org.learning.pizzeria.controller;
 import jakarta.validation.Valid;
 import org.learning.pizzeria.exceptions.OffertaNotFoundException;
 import org.learning.pizzeria.exceptions.PizzaNotFoundException;
+import org.learning.pizzeria.model.AlertMessage;
 import org.learning.pizzeria.model.Offerta;
 import org.learning.pizzeria.model.Pizza;
 import org.learning.pizzeria.repository.OffertaRepository;
@@ -78,5 +79,25 @@ public class OffertaController {
         } catch (OffertaNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+        Integer pizzaId = null;
+        try {
+            pizzaId = offertaService.delete(id);
+            redirectAttributes.addFlashAttribute
+                    ("message",new AlertMessage (AlertMessage.AlertMessageType.SUCCESS, "Offerta eliminata!"));
+        } catch (OffertaNotFoundException e) {
+            redirectAttributes.addFlashAttribute
+                    ("message",new AlertMessage (AlertMessage.AlertMessageType.ERROR, "Offerta with id" + e.getMessage() + " not found"));
+        } catch (Exception e){
+            redirectAttributes.addFlashAttribute
+                    ("message",new AlertMessage (AlertMessage.AlertMessageType.ERROR, "Unable to delete offerta"));
+        }
+        if(pizzaId == null){
+            return "redirect:/pizze/";
+        }
+        return "redirect:/pizze/" + Integer.toString(pizzaId);
     }
 }

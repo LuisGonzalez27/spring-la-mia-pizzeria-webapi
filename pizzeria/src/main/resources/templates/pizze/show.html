@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-    <th:block th:replace="~{/fragments/fragment :: resources}"></th:block>
+    <th:block th:replace="~{/fragments/fragment :: resources}"  class="pt-5"></th:block>
     <title>Pizza dettagli</title>
 </head>
 
@@ -11,18 +11,22 @@
 <th:block th:replace="~{/fragments/navbar :: navbar('pizze')}"></th:block>
 
 <div class="container px-4">
+    <th:block th:if="${message}">
+        <div th:replace="~{/fragments/messages :: alert(${message.type}, ${message.text})}"></div>
+    </th:block>
     <h1 class="pt-5" th:text="${pizza.nome}"></h1>
     <p th:text="${pizza.descrizione}"></p>
     <p th:text="${pizza.prezzo}"></p>
 
+    <h3>
+        <span>Offerte</span>
+        <a th:href="@{/offerte/create(pizzaId=${pizza.id})}" class="btn btn-primary rounded-circle"
+           title="Crea nuova offerta speciale" sec:authorize="hasAuthority('ADMIN')">
+            <i class="fa-solid fa-plus"></i>
+        </a>
+    </h3>
+
     <div th:if="${pizza.offerteList.size()>0}" class="pt-2">
-        <h3>
-            <span>Offerte</span>
-            <a th:href="@{/offerte/create(pizzaId=${pizza.id})}" class="btn btn-primary rounded-circle"
-               title="Crea nuova offerta speciale" sec:authorize="hasAuthority('ADMIN')">
-                <i class="fa-solid fa-plus"></i>
-            </a>
-        </h3>
 
         <ul th:each="offerta : ${pizza.offerteList}">
             <li>Dal [[${#temporals.format(offerta.startOfferDate, 'dd/MM/yyyy')}]]
@@ -34,10 +38,12 @@
                title="modfica offerta" sec:authorize="hasAuthority('ADMIN')">
                 <i class="fa-solid fa-pen-to-square"></i>
             </a>
+
+            <a th:href="@{'/offerte/delete/{id}'(id=${offerta.id})}" class="btn btn-danger btn-sm"
+               title="modfica offerta" sec:authorize="hasAuthority('ADMIN')">
+                <i class="fa-solid fa-trash"></i>
+            </a>
         </ul>
-
-
-
 
     </div>
 
