@@ -2,6 +2,7 @@ package org.learning.pizzeria.controller;
 
 import jakarta.validation.Valid;
 import org.learning.pizzeria.exceptions.PizzaNotFoundException;
+import org.learning.pizzeria.model.AlertMessage;
 import org.learning.pizzeria.model.Pizza;
 import org.learning.pizzeria.repository.PizzaRepository;
 import org.learning.pizzeria.service.PizzaService;
@@ -109,14 +110,18 @@ public class PizzaController {
         try {
             boolean success = pizzaService.deleteById(id);
             if (success) {
-                return "redirect:/pizze";
+                redirectAttributes.addFlashAttribute("message",
+                        new AlertMessage(AlertMessage.AlertMessageType.SUCCESS, "Pizza con id " + id + " eliminata"));
             } else {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Non si puo eliminare pizza con id : " + id);
+                redirectAttributes.addFlashAttribute("message",
+                        new AlertMessage(AlertMessage.AlertMessageType.ERROR, "Non si puo elimnare pizza con " + id ));
             }
 
         } catch (PizzaNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            redirectAttributes.addFlashAttribute("message",
+                    new AlertMessage(AlertMessage.AlertMessageType.ERROR, "Pizza con id " + id + " non trovata"));
         }
+        return "redirect:/pizze";
     }
 
 }

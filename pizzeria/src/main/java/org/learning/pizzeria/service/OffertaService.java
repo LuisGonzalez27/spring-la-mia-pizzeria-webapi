@@ -30,7 +30,7 @@ public class OffertaService {
         return offertaRepository.save(offertaTuUpdate);
     }
 
-    public Integer delete(Integer offertaId){
+    public Integer delete(Integer offertaId) throws OffertaNotFoundException{
         Offerta offertaToDelete = getById(offertaId);
         offertaRepository.delete(offertaToDelete);
         return offertaToDelete.getPizza().getId();

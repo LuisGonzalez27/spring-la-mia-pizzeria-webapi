@@ -28,7 +28,7 @@ public class Pizza {
     @DecimalMax("50.00")
     private BigDecimal prezzo;
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL)
     private List<Offerta> offerteList;
 
     public List<Offerta> getOfferteList() {

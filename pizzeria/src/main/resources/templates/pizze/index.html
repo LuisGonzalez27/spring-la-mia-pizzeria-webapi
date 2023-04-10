@@ -10,8 +10,13 @@
 
 <th:block th:replace="~{/fragments/navbar :: navbar('pizze')}"></th:block>
 
+<th:block th:if="${message}">
+    <div th:replace="~{/fragments/messages :: alert(${message.type}, ${message.text})}"></div>
+</th:block>
+
 <div class="container px-4">
     <h1 class="text-center py-5">Le nostre pizze</h1>
+
     <a th:href="@{/pizze/create}"
        class="btn btn-primary mb-5"
        sec:authorize="hasAuthority('ADMIN')"
