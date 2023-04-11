@@ -1,5 +1,6 @@
 package org.learning.pizzeria.api;
 
+import jakarta.validation.Valid;
 import org.learning.pizzeria.exceptions.PizzaNotFoundException;
 import org.learning.pizzeria.model.Pizza;
 import org.learning.pizzeria.service.PizzaService;
@@ -35,6 +36,11 @@ public class PizzaRestController {
         } catch (PizzaNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+    //Creare una nuova pizza
+    @PostMapping
+    public Pizza create(@RequestBody Pizza pizza){
+        return pizzaService.createPizza(pizza);
     }
 
 }
