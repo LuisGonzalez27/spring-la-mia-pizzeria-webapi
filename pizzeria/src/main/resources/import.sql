@@ -13,3 +13,7 @@ INSERT INTO db_pizzeria.roles (id, name) VALUES(2, 'USER');
 
 INSERT INTO db_pizzeria.users_roles(user_id, roles_id) VALUES(1, 1);
 INSERT INTO db_pizzeria.users_roles(user_id, roles_id) VALUES(2, 2);
+
+INSERT INTO db_pizzeria.ingredienti (description, name) VALUES('Fresco', 'Pomodoro');
+INSERT INTO db_pizzeria.ingredienti (description, name) VALUES('Di tropea', 'Cipolla rossa');
+INSERT INTO db_pizzeria.ingredienti (description, name) VALUES('Extravergine di oliva', 'Olio');

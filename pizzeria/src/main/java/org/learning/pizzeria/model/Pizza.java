@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "pizze")
@@ -37,6 +38,12 @@ public class Pizza {
     public void setOfferteList(List<Offerta> offerteList) {
         this.offerteList = offerteList;
     }
+    @ManyToMany
+    @JoinTable(
+            name = "pizza_ingrediente",
+            joinColumns = @JoinColumn(name = "pizza_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
+    private Set<Ingrediente> ingredienti;
 
     public Pizza() {
         super();
@@ -78,5 +85,13 @@ public class Pizza {
 
     public void setPrezzo(BigDecimal prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public Set<Ingrediente> getIngredienti() {
+        return ingredienti;
+    }
+
+    public void setIngredienti(Set<Ingrediente> ingredienti) {
+        this.ingredienti = ingredienti;
     }
 }

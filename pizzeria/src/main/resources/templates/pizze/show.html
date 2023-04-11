@@ -16,7 +16,14 @@
     </th:block>
     <h1 class="pt-5" th:text="${pizza.nome}"></h1>
     <p th:text="${pizza.descrizione}"></p>
-    <p th:text="${pizza.prezzo}"></p>
+    <p th:text="${pizza.prezzo}">
+
+    <div th:block th:if="${pizza.ingredienti.size > 0}">
+        <h2>Ingredienti</h2>
+    <ul>
+        <li th:each="ingrediente : ${pizza.ingredienti}" th:text="|${ingrediente.name} |"></li>
+    </ul>
+    </div>
 
     <h3>
         <span>Offerte</span>
