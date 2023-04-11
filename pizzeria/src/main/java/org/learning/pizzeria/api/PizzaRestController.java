@@ -54,4 +54,17 @@ public class PizzaRestController {
         }
     }
 
+    //Cancellare una pizza
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id){
+        try {
+            boolean success = pizzaService.deleteById(id);
+            if( !success){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Impossibile eliminare la pizza");
+            }
+        } catch (PizzaNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
