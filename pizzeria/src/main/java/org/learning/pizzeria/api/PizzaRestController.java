@@ -1,9 +1,12 @@
 package org.learning.pizzeria.api;
 
+import org.learning.pizzeria.exceptions.PizzaNotFoundException;
 import org.learning.pizzeria.model.Pizza;
 import org.learning.pizzeria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,16 @@ public class PizzaRestController {
             return pizzaService.getFilteredPizze(search.get());
         }
         return pizzaService.getAllPizze();
+    }
+
+    //Singola pizza
+    @GetMapping("/{id}")
+    public Pizza getById(@PathVariable Integer id){
+        try {
+            return pizzaService.getById(id);
+        } catch (PizzaNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
