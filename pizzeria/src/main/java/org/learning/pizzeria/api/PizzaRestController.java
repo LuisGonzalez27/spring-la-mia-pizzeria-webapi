@@ -42,5 +42,16 @@ public class PizzaRestController {
     public Pizza create(@RequestBody Pizza pizza){
         return pizzaService.createPizza(pizza);
     }
+    //Modificare una pizza esistente
+    @PutMapping("/{id}")
+    public Pizza update(@PathVariable Integer id, @Valid @RequestBody Pizza pizza){
+        try {
+            return pizzaService.updatePizza(pizza, id);
+        } catch (PizzaNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 
 }
