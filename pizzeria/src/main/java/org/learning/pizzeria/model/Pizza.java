@@ -1,5 +1,6 @@
 package org.learning.pizzeria.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -29,6 +30,7 @@ public class Pizza {
     @DecimalMax("50.00")
     private BigDecimal prezzo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL)
     private List<Offerta> offerteList;
 
