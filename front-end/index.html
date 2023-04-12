@@ -13,7 +13,28 @@
 </head>
 <body>
     <div class="container">
-        <h1>Pizze</h1>
+        <h1>Pizze <button class="btn btn-info rounded-circle" id="toggle-form">+</button></h1>
+        <section id="form" class="my-4 d-none">
+            <form id="pizza-form" action="#" class="row gy-2">
+                <div class="col-6">
+                    <label for="form-label" for="nome">Nome</label>
+                    <input class="form-control" type="text" id="nome" name="nome" />
+                </div>
+
+                <div class="col-6">
+                    <label for="form-label" for="descrizione">Descrizione</label>
+                    <input class="form-control" type="text" id="descrizione" name="descrizione" />
+                </div>
+
+                <div class="col-6">
+                    <label for="form-label" for="prezzo">Prezzo</label>
+                    <input class="form-control" type="number" id="prezzo" name="prezzo" />
+                </div>
+
+                <div class="col-12"><button type="submit" class="btn btn-success">Salva</button></div>
+            </form>
+        </section>
+
         <section id="content"></section>
     </div>
 

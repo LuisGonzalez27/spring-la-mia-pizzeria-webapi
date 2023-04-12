@@ -1,7 +1,8 @@
 //GLOBAL VARIABLES
 const PIZZE_URL = 'http://localhost:8080/api/v1/pizze';
 const contentElement = document.getElementById("content");
-
+const toggleForm = document.getElementById("toggle-form");
+const pizzaForm = document.getElementById("pizza-form");
 
 //API
 const getPizzaList = async() => {
@@ -9,9 +10,22 @@ const getPizzaList = async() => {
     return response;
 }
 
+const postPizza = async(jsonData) => {
+    const fetchOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: jsonData,
+    };
+    const response = await fetch(PIZZE_URL, fetchOptions);
+    return response;
+}
+
 //DOM
-
-
+const toggleFormVisibility = () => {
+    document.getElementById("form").classList.toggle('d-none');
+}
 const createIngredientiList = (ingredienti) => {
     let ingredientiHtml = "<p>";
 
@@ -22,7 +36,6 @@ const createIngredientiList = (ingredienti) => {
     ingredientiHtml += '</p>';
     return ingredientiHtml;
 }
-
 
 const createPizzaItem = (item) => {
     return `<div class="col-4"> 
@@ -53,6 +66,7 @@ const createPizzaList = (data) => {
     return list;
 }
 
+//Other
 const loadData = async() => {
     const response = await getPizzaList();
     console.log(response);
@@ -71,5 +85,29 @@ const loadData = async() => {
 
 }
 
+const savePizza = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    
+    const formDataObj = Object.fromEntries(formData.entries());
+    
+    const formDataJson = JSON.stringify(formDataObj);
+
+    const response = await postPizza(formDataJson);
+
+    const responseBody = await response.json();
+
+    if(response.ok){
+        loadData();
+        event.target.reset();
+    } else {
+        console.log('ERROR');
+        console.log(response.status);
+        console.log(responseBody);
+    }
+};
+
 //Global code
-loadData()
+toggleForm.addEventListener('click' , toggleFormVisibility);
+pizzaForm.addEventListener('submit', savePizza);
+loadData();
