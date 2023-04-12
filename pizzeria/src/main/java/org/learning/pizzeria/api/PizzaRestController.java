@@ -2,6 +2,7 @@ package org.learning.pizzeria.api;
 
 import jakarta.validation.Valid;
 import org.learning.pizzeria.exceptions.PizzaNotFoundException;
+import org.learning.pizzeria.model.Ingrediente;
 import org.learning.pizzeria.model.Pizza;
 import org.learning.pizzeria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
