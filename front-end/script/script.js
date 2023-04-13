@@ -8,7 +8,7 @@ const pizzaForm = document.getElementById("pizza-form");
 const getPizzaList = async() => {
     const response = await fetch(PIZZE_URL);
     return response;
-}
+};
 
 const postPizza = async(jsonData) => {
     const fetchOptions = {
@@ -20,12 +20,18 @@ const postPizza = async(jsonData) => {
     };
     const response = await fetch(PIZZE_URL, fetchOptions);
     return response;
-}
+};
+
+const deletePizzaById = async (pizzaId) => {
+    const response = await fetch(PIZZE_URL + '/' + pizzaId, { method: 'DELETE' });
+    return response;
+};
 
 //DOM
 const toggleFormVisibility = () => {
     document.getElementById("form").classList.toggle('d-none');
-}
+};
+
 const createIngredientiList = (ingredienti) => {
     let ingredientiHtml = "<p>";
 
@@ -35,7 +41,7 @@ const createIngredientiList = (ingredienti) => {
 
     ingredientiHtml += '</p>';
     return ingredientiHtml;
-}
+};
 
 const createPizzaItem = (item) => {
     return `<div class="col-4"> 
@@ -44,6 +50,9 @@ const createPizzaItem = (item) => {
                         <h5 class="card-title">${item.nome}</h5>
                         <p class="card-text">${item.descrizione}</p>
                         <p class="card-text">${item.prezzo} EUR</p>
+                        <button class="btn btn-danger" data-id="${item.id}">
+                            Cancella
+                        </button>
                     </div>
 
                     <div class="card-footer">
@@ -51,7 +60,7 @@ const createPizzaItem = (item) => {
                     </div>
                 </div>
     </div>`;
-}
+};
 
 const createPizzaList = (data) => {
     console.log(data);
@@ -64,7 +73,7 @@ const createPizzaList = (data) => {
 
     list += '</div>';
     return list;
-}
+};
 
 //Other
 const loadData = async() => {
@@ -74,16 +83,21 @@ const loadData = async() => {
     if(response.ok){
         const data = await response.json();
         
-
         //render html
         contentElement.innerHTML = createPizzaList(data);
 
-
+        const deleteBtns = document.querySelectorAll('button[data-id]');
+        console.log(deleteBtns);
+        for (let btn of deleteBtns) {
+            btn.addEventListener('click', () => {
+            deletePizza(btn.dataset.id);
+        });
+    }
     } else {
         console.log('ERROR');
     }
 
-}
+};
 
 const savePizza = async (event) => {
     event.preventDefault();
@@ -105,6 +119,20 @@ const savePizza = async (event) => {
         console.log(response.status);
         console.log(responseBody);
     }
+};
+
+const deletePizza = async(pizzaId) => {
+    console.log('delete pizza ' + pizzaId);
+
+    const response = await deletePizzaById(pizzaId);
+
+    if(response.ok){
+        loadData();
+    } else {
+        console.log('ERROR');
+        console.log(response.status);
+    }
+
 };
 
 //Global code
